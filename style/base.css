@@ -1,0 +1,86 @@
+body {
+  font-family: "Droid Sans", "proxima-nova", "Proxima Nova", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.15);
+  text-align: center;
+  background-color: #21272d;
+  color: #dddddd;
+  padding: 40px;
+}
+body .no-js {
+  display: block;
+  position: absolute;
+  bottom: 50%;
+  width: 100%;
+}
+body .js {
+  display: none;
+}
+body a {
+  color: #dddddd;
+  text-decoration: none;
+}
+body .calendar {
+  width: 350px;
+  height: 300px;
+  background-color: #ffffff;
+  color: #333333;
+  box-shadow: 3px 13px 3px #000000;
+  margin: auto;
+}
+body .calendar .header {
+  height: 50px;
+  width: 100%;
+  padding-top: 10px;
+  position: relative;
+}
+body .calendar .header .btn {
+  position: absolute;
+  top: 50%;
+  margin-top: -5px;
+}
+body .calendar .header .btn.prev {
+  width: 0px;
+  height: 0px;
+  border: 5px solid transparent;
+  border-right: 5px solid black;
+  left: 10px;
+  cursor: pointer;
+}
+body .calendar .header .btn.prev:hover {
+  border-right-color: #71777d;
+}
+body .calendar .header .btn.next {
+  width: 0px;
+  height: 0px;
+  border: 5px solid transparent;
+  border-left: 5px solid black;
+  right: 10px;
+  cursor: pointer;
+}
+body .calendar .header .btn.next:hover {
+  border-left-color: #71777d;
+}
+body .calendar .header .month {
+  font-size: 20px;
+}
+body .calendar .header .year {
+  font-size: 10px;
+}
+body .calendar .content {
+  height: 250px;
+  width: 100%;
+  background-color: #f6f6f6;
+  color: #333333;
+}
+body .calendar .content .wrapper {
+  height: 100%;
+  width: 100%;
+}
+body .calendar .content .tile {
+  float: left;
+  width: 14.285714285714286%;
+  height: 20%;
+  background-color: red;
+  opacity: 0;
+  transition: opacity 1s;
+}

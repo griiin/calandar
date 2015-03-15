@@ -1,0 +1,116 @@
+body {
+    font-family: "Droid Sans", "proxima-nova", "Proxima Nova", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    text-shadow: 0 -1px 0 rgba(0,0,0,.15);
+    text-align: center;
+    background-color: rgb(33, 39, 45);
+    color: rgb(221, 221, 221);
+    padding: 40px;
+
+    .no-js {
+        display: block;
+        position: absolute;
+        bottom: 50%;
+        width: 100%;
+    }
+
+    .js {
+        display: none;
+    }
+
+    a {
+        color: rgb(221, 221, 221);
+        text-decoration: none;
+    }
+
+    @calandar-height: 300px;
+    @calandar-width: 350px;
+    @calandar-header-height: 50px;
+    @calandar-background-color-contour: rgb(255, 255, 255);
+    @calandar-color-header: rgb(51, 51, 51);
+    @calandar-background-color-content: rgb(246, 246, 246);
+    @calandar-color-content: rgb(51, 51, 51);
+    @calandar-box-shadow: 3px 13px 3px #000;
+    @calandar-btn-color: rgb(33, 39, 45);
+    @calandar-hover-diff: 80;
+    @calandar-btn-color-hover: rgb(33+@calandar-hover-diff, 39+@calandar-hover-diff, 45+@calandar-hover-diff);
+    @calandar-daynb: 7;
+    @calandar-weeknb: 5;
+
+    .calendar {
+        width: @calandar-width;
+        height: @calandar-height;
+        background-color: @calandar-background-color-contour;
+        color: @calandar-color-header;
+        box-shadow: @calandar-box-shadow;
+        margin: auto;
+
+        .header {
+            height: @calandar-header-height;
+            width: 100%;
+            padding-top: 10px;
+            position: relative;
+
+
+            .btn {
+                position: absolute;
+                top: 50%;
+                margin-top: -5px;
+
+                &.prev {
+                    width: 0px;
+                    height: 0px;
+                    border: 5px solid transparent;
+                    border-right: 5px solid black;
+                    left: 10px;
+                    cursor: pointer;
+
+                    &:hover {
+                        border-right-color: @calandar-btn-color-hover;
+                    }
+                }
+
+                &.next {
+                    width: 0px;
+                    height: 0px;
+                    border: 5px solid transparent;
+                    border-left: 5px solid black;
+                    right: 10px;
+                    cursor: pointer;
+
+                    &:hover {
+                        border-left-color: @calandar-btn-color-hover;
+                    }
+                }
+            }
+
+            .month {
+                font-size: 20px;
+            }
+
+            .year {
+                font-size: 10px;
+            }
+        }
+
+        .content {
+            height: @calandar-height - @calandar-header-height;
+            width: 100%;
+            background-color: @calandar-background-color-content;
+            color: @calandar-color-content;
+
+            .wrapper {
+                height: 100%;
+                width: 100%;
+            }
+
+            .tile {
+                float: left;
+                width: 100% / @calandar-daynb;
+                height: 100% / @calandar-weeknb;
+                background-color: red;
+                opacity: 0;
+                transition: opacity 1s;
+            }
+        }
+    }
+}
