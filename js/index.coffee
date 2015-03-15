@@ -86,7 +86,7 @@
                 content = date.format("D")
                 parsedDay = date.format("dddd")
                 cl += " valid"
-                if @isDeliveryDay(parsedDay) and moment().diff(date) < 0
+                if @isDeliveryDay(parsedDay) and moment().add(6, "days").diff(date) < 0
                     cl += " delivery-day"
                     isDeliveryDay = true
             $div = $('<div class="' + cl + '">' + content + '</div>')

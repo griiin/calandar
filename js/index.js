@@ -130,7 +130,7 @@
           content = date.format("D");
           parsedDay = date.format("dddd");
           cl += " valid";
-          if (this.isDeliveryDay(parsedDay) && moment().diff(date) < 0) {
+          if (this.isDeliveryDay(parsedDay) && moment().add(6, "days").diff(date) < 0) {
             cl += " delivery-day";
             isDeliveryDay = true;
           }
