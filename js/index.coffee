@@ -1,4 +1,4 @@
-(($, window) ->
+(($, moment, _, window) ->
     'use strict'
 
     # INIT
@@ -8,23 +8,99 @@
 
     class Calendar
 
-        constructor: (path) ->
+        constructor: (path, deliveryDays) ->
             @cal = $(path)
             @content = $(".content", @cal)
             @prevBtn = $(".btn.prev", @cal)
             @nextBtn = $(".btn.next", @cal)
-            @days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
-            @months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
+            @deliveryDays = deliveryDays
             @currentmonthstiles = []
-            @wrapper = $("<div class='wrapper'></div>", @content)
+            @currentdate = moment()
+            @refreshDate()
+            @selectedDays = []
 
-        additem: (wrapper) =>
-            $div = $('<div class="tile"></div>')
+        refreshDate: =>
+            $month = $(".month", @cal)
+            $month.text(@currentdate.format("MMMM"))
+            $year = $(".year", @cal)
+            $year.text(@currentdate.format("YYYY"))
+            @refreshDays()
+
+        refreshDays: =>
+            wrapper = $("<div class='wrapper'></div>")
+            @content.append(wrapper)
+            monthday = @currentdate.date(1).clone()
+            queue = []
+            for i in [1..monthday.day()] by 1
+                queue.push undefined
+            while monthday.month() is @currentdate.month()
+                queue.push monthday.clone()
+                monthday.add(1, "day")
+            queue = queue.reverse()
+            rec = () =>
+                setTimeout(() =>
+                    if queue.length
+                        rec()
+                        d = queue.pop()
+                        @additem wrapper, d
+                , 10)
+            rec()
+            @wrapper = wrapper
+
+        isDeliveryDay: (day) =>
+            flag = false
+            for d in @deliveryDays
+                if d is day
+                    flag = true
+            flag
+
+        refreshSelectedDays: =>
+            _.each(@currentmonthstiles, ($div) =>
+                date = $div.data("date")
+                if not date
+                    return;
+                if _.some(@selectedDays, (d) => d.format("DD-MM-YYYY") is date.format("DD-MM-YYYY"))
+                    $div.addClass("selected")
+                else
+                    $div.removeClass("selected")
+            )
+
+        tryAdd: (date) =>
+            alreadyExists = (d) -> d.format("DD-MM-YYYY") is date.format("DD-MM-YYYY")
+            sameWeek =  (d) -> d.format("WW-YYYY") is date.format("WW-YYYY")
+            if _.some(@selectedDays, alreadyExists)
+                _.remove(@selectedDays, alreadyExists)
+            else
+                if _.some(@selectedDays, sameWeek)
+                    _.remove(@selectedDays, sameWeek)
+                @selectedDays.push date
+            @refreshSelectedDays()
+
+        additem: (wrapper, date) =>
+            cl = "tile"
+            content = ""
+            isDeliveryDay = false
+            if date is undefined
+                cl += " invalid"
+            else
+                content = date.format("D")
+                parsedDay = date.format("dddd")
+                cl += " valid"
+                if @isDeliveryDay(parsedDay) and moment().diff(date) < 0
+                    cl += " delivery-day"
+                    isDeliveryDay = true
+            $div = $('<div class="' + cl + '">' + content + '</div>')
+            $div.data("date", date)
             @currentmonthstiles.push $div
             wrapper.append($div)
-            setTimeout(() ->
-                $div.css("opacity", 1)
-            , 100)
+            if date
+                if isDeliveryDay
+                    $div.click () =>
+                        @tryAdd date
+                setTimeout(() =>
+                    $div.css("opacity", 1)
+                    @refreshSelectedDays()
+                , 100)
 
         addall: =>
             wrapper = $("<div class='wrapper'></div>")
@@ -47,17 +123,21 @@
 
         start: =>
             console.log @cal
-            @addall()
+            # @addall()
             @prevBtn.click () =>
                 @clean()
-                @addall()
+                # @addall()
+                @currentdate.subtract(1, "month")
+                @refreshDate()
             @nextBtn.click () =>
                 @clean()
-                @addall()
+                # @addall()
+                @currentdate.add(1, "month")
+                @refreshDate()
 
-    cal = new Calendar ".calendar"
+    cal = new Calendar ".calendar", ["Wednesday", "Friday"]
     cal.start()
     window.cal = cal
 
 
-)(jQuery, this)
+)(jQuery, moment, _, this)

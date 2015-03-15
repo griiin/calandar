@@ -21,14 +21,14 @@ body a {
 }
 body .calendar {
   width: 350px;
-  height: 300px;
+  height: 350px;
   background-color: #ffffff;
   color: #333333;
   box-shadow: 3px 13px 3px #000000;
   margin: auto;
 }
 body .calendar .header {
-  height: 50px;
+  height: 60px;
   width: 100%;
   padding-top: 10px;
   position: relative;
@@ -66,8 +66,19 @@ body .calendar .header .month {
 body .calendar .header .year {
   font-size: 10px;
 }
+body .calendar .header .days {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  color: red;
+}
+body .calendar .header .days span {
+  width: 14.285714285714286%;
+  display: block;
+  float: left;
+}
 body .calendar .content {
-  height: 250px;
+  height: 290px;
   width: 100%;
   background-color: #f6f6f6;
   color: #333333;
@@ -79,8 +90,20 @@ body .calendar .content .wrapper {
 body .calendar .content .tile {
   float: left;
   width: 14.285714285714286%;
-  height: 20%;
-  background-color: red;
+  height: 16.666666666666668%;
+  background-color: #353b41;
+  color: #dddddd;
   opacity: 0;
-  transition: opacity 1s;
+  transition: opacity 1s, background-color 0.5s;
+  line-height: 50px;
+}
+body .calendar .content .tile.delivery-day {
+  cursor: pointer;
+  background-color: #494f55;
+}
+body .calendar .content .tile.delivery-day:hover {
+  background-color: #0d1319;
+}
+body .calendar .content .tile.delivery-day.selected {
+  background-color: red;
 }

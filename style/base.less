@@ -22,9 +22,9 @@ body {
         text-decoration: none;
     }
 
-    @calandar-height: 300px;
+    @calandar-height: 350px;
     @calandar-width: 350px;
-    @calandar-header-height: 50px;
+    @calandar-header-height: 60px;
     @calandar-background-color-contour: rgb(255, 255, 255);
     @calandar-color-header: rgb(51, 51, 51);
     @calandar-background-color-content: rgb(246, 246, 246);
@@ -34,7 +34,7 @@ body {
     @calandar-hover-diff: 80;
     @calandar-btn-color-hover: rgb(33+@calandar-hover-diff, 39+@calandar-hover-diff, 45+@calandar-hover-diff);
     @calandar-daynb: 7;
-    @calandar-weeknb: 5;
+    @calandar-weeknb: 6;
 
     .calendar {
         width: @calandar-width;
@@ -90,6 +90,19 @@ body {
             .year {
                 font-size: 10px;
             }
+
+            .days {
+                position: absolute;
+                bottom: 0;
+                width: 100%;
+                color: red;
+
+                span {
+                    width: 100% / 7;
+                    display: block;
+                    float: left;
+                }
+            }
         }
 
         .content {
@@ -107,9 +120,31 @@ body {
                 float: left;
                 width: 100% / @calandar-daynb;
                 height: 100% / @calandar-weeknb;
-                background-color: red;
+                background-color: rgb(33+20, 39+20, 45+20);
+                color: rgb(221, 221, 221);
                 opacity: 0;
-                transition: opacity 1s;
+                transition: opacity 1s, background-color 0.5s;
+                line-height: 50px;
+
+                &.valid {
+                }
+
+                &.delivery-day {
+                    cursor:pointer;
+                    background-color: rgb(33+40, 39+40, 45+40);
+
+                    &:hover {
+                        background-color: rgb(33-20, 39-20, 45-20);
+                    }
+
+                    &.selected {
+                        background-color: red;
+                    }
+                }
+
+                &.invalid {
+
+                }
             }
         }
     }
